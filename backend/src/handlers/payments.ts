@@ -12,6 +12,11 @@ export default function mountPaymentsEndpoints(router: Router) {
       const txid = payment.transaction && payment.transaction.txid;
       const txURL = payment.transaction && payment.transaction._link;
 
+      /* 
+        Implement your logic here
+        e.g. verifying the payment, delivering the item to the user, etc...
+      */
+
       const app = req.app;
       const orderCollection = app.locals.orderCollection;
       const order = await orderCollection.findOne({ pi_payment_id: paymentId });
@@ -48,6 +53,11 @@ export default function mountPaymentsEndpoints(router: Router) {
       const currentPayment = await platformAPIClient.get(`/v2/payments/${paymentId}`);
       const orderCollection = app.locals.orderCollection;
 
+      /* 
+        Implement your logic here 
+        e.g. creating an order record, reserve an item if the quantity is limited, etc...
+      */
+
       await orderCollection.insertOne({
         pi_payment_id: paymentId,
         product_id: currentPayment.data.metadata.productId,
@@ -74,6 +84,11 @@ export default function mountPaymentsEndpoints(router: Router) {
       const txid = req.body.txid;
       const orderCollection = app.locals.orderCollection;
 
+      /* 
+        Implement your logic here
+        e.g. verify the transaction, deliver the item to the user, etc...
+      */
+
       await orderCollection.updateOne({ pi_payment_id: paymentId }, { $set: { txid: txid, paid: true } });
       await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { txid });
       return res.status(200).json({ message: `Completed the payment ${paymentId}` });
@@ -89,6 +104,11 @@ export default function mountPaymentsEndpoints(router: Router) {
       const app = req.app;
       const paymentId = req.body.paymentId;
       const orderCollection = app.locals.orderCollection;
+
+      /*
+        Implement your logic here
+        e.g. mark the order record to cancelled, etc...
+      */
 
       await orderCollection.updateOne({ pi_payment_id: paymentId }, { $set: { cancelled: true } });
       return res.status(200).json({ message: `Cancelled the payment ${paymentId}` });
