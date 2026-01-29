@@ -42,7 +42,7 @@ COPY docker/entrypoint.sh /var/entrypoint.sh
 RUN chmod +x /var/entrypoint.sh
 
 # Copy built app (Vite outputs to /dist)
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /var/www/webapp
 
 # Optional: better defaults
 RUN sed -i 's/worker_processes  1/worker_processes auto/' /etc/nginx/nginx.conf
