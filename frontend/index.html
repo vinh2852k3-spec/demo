@@ -1,54 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
 
-  <!-- Vite does not use %PUBLIC_URL% -->
+    <!-- Vite does not use %PUBLIC_URL% -->
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta
-          name="description"
-          content="Web site created using React + Vite"
-  />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using React + Vite" />
 
-  <!--
+    <!--
     Runtime environment variables
     These values are:
     - replaced in DEV by Vite (via import.meta.env if needed)
     - replaced in PROD by Docker entrypoint (string replace)
   -->
-  <script>
-    window.__ENV = {
-      backendURL: "%VITE_BACKEND_URL%",
-      sandbox: "%VITE_SANDBOX_SDK%",
-    };
-  </script>
+    <script>
+      window.__ENV = {
+        backendURL: "%VITE_BACKEND_URL%",
+        sandbox: "%VITE_SANDBOX_SDK%",
+      };
+    </script>
 
-  <!-- Pi Network SDK -->
-  <!-- PROD example:
-  <script src="https://sdk.minepi.com/v2-production.js"></script>
-  -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <!-- Pi Network SDK -->
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-  <script>
-    const runSDKInSandboxMode = window.__ENV.sandbox === "true";
+    <script>
+      const runSDKInSandboxMode = window.__ENV.sandbox === "true";
 
-    Pi.init({
-      version: "2.0",
-      sandbox: runSDKInSandboxMode,
-    });
-  </script>
+      Pi.init({
+        version: "2.0",
+        sandbox: runSDKInSandboxMode,
+      });
+    </script>
 
-  <title>React App</title>
-</head>
+    <title>React App</title>
+  </head>
 
-<body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
 
-<div id="root"></div>
+    <div id="root"></div>
 
-<!-- Vite entry -->
-<script type="module" src="/src/main.tsx"></script>
-</body>
+    <!-- Vite entry -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
