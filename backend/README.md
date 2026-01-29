@@ -13,11 +13,10 @@ The demo app's backend uses a local MongoDB server to store user data and sessio
 
 ### 1. Install dependencies:
 
-You will need a working NodeJS installation, and `yarn`. **The demo app frontend isn't meant to support npm**.
+You will need a working NodeJS installation (v18 LTS or v20 LTS recommended), and `yarn`. **The demo app frontend isn't meant to support npm**.
 In most cases, `yarn` will come along with your NodeJS installation.
 
 Install dependencies by running `yarn install`.
-
 
 ### 2. Set up environment variables
 
@@ -54,7 +53,6 @@ PI_API_KEY=
 SESSION_SECRET=
 ```
 
-
 ### 2. Set up MongoDB
 
 The default port for MongoDB is `27017`. If you have decided to change either default port or username and password,
@@ -68,7 +66,7 @@ Start a MongoDB server using the following command:
 ```
 docker run --name demoapp-mongo -d \
   -e MONGO_INITDB_ROOT_USERNAME=demoapp -e MONGO_INITDB_ROOT_PASSWORD=dev_password \
-  -p 27017:27017 mongo:5.0
+  -p 27017:27017 mongo:7.0
 ```
 
 Down the road, you can use the following commands to stop and start your mongo container:
@@ -86,7 +84,6 @@ docker kill demoapp-mongo; docker rm demoapp-mongo
 
 Then, recreate the container using the `docker run` command above.
 
-
 **Options 2: directly install MongoDB on your machine:**
 
 Install MongoDB Community following the
@@ -97,22 +94,20 @@ Run the server and create a database and a user:
 Open a Mongo shell by running `mongosh`, then paste the following JS code into it:
 
 ```javascript
-var MONGODB_DATABASE_NAME = "demoapp-development"
-var MONGODB_USERNAME = "demoapp"
-var MONGODB_PASSWORD = "dev_password"
+var MONGODB_DATABASE_NAME = "demoapp-development";
+var MONGODB_USERNAME = "demoapp";
+var MONGODB_PASSWORD = "dev_password";
 
-db.getSiblingDB("admin").createUser(
-  {
-    user: MONGODB_USERNAME,
-    pwd: MONGODB_PASSWORD,
-    roles: [
-      {
-        role: "dbOwner",
-        db: MONGODB_DATABASE_NAME,
-      }
-    ]
-  }
-);
+db.getSiblingDB("admin").createUser({
+  user: MONGODB_USERNAME,
+  pwd: MONGODB_PASSWORD,
+  roles: [
+    {
+      role: "dbOwner",
+      db: MONGODB_DATABASE_NAME,
+    },
+  ],
+});
 ```
 
 To preview the database, you can use Robo3T or MongoDB Compass.
@@ -131,4 +126,5 @@ CORS config: configured to respond to a frontend hosted on http://localhost:3314
 ```
 
 ---
+
 You've completed the backend setup, return to [`doc/development.md`](../doc/deployment.md) to finish setting up the demo app
