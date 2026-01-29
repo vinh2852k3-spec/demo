@@ -21,6 +21,10 @@ COPY . .
 # Build Vite app
 RUN npm run build || yarn build || pnpm build
 
+# We have set GENERATE_SOURCEMAP=false in our build script but we're doing this to add an extra layer
+# of safety - we want to keep JS source maps from getting deployed on the production servers:
+RUN rm -rf ./dist/assets/*.map
+
 
 ##
 ## RUNNER
@@ -32,6 +36,10 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 # Custom nginx config
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy entrypoint script
+COPY docker/entrypoint.sh /var/entrypoint.sh
+RUN chmod +x /var/entrypoint.sh
 
 # Copy built app (Vite outputs to /dist)
 COPY --from=builder /app/dist /usr/share/nginx/html
